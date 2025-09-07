@@ -23,6 +23,12 @@ router.post(
 router.get("/", bookControlers.getAllPublishedBooks); // all users
 
 router.get(
+  "/my-books",
+  checkAuth(Role.WRITER, Role.ADMIN, Role.SUPER_ADMIN),
+  bookControlers.getMyBooks
+); // all Writers
+
+router.get(
   "/all-books",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   bookControlers.getAllBook

@@ -54,6 +54,22 @@ const getAllPublishedBooks = catchAsync(
   }
 );
 
+const getMyBooks = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query as Record<string, string>;
+    const decodedToken = req.user as JwtPayload;
+
+    const result = await bookServices.getMyBooks(query, decodedToken);
+
+    SendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "All Books retrives",
+      data: result.data,
+    });
+  }
+);
+
 const getAllBook = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const query = req.query as Record<string, string>;
@@ -139,6 +155,7 @@ export const bookControlers = {
   createBook,
   addBook,
   getAllBook,
+  getMyBooks,
   getAllPublishedBooks,
   getAllPendingBooks,
   getSingleBook,

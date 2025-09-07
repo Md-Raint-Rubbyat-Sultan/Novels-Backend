@@ -92,6 +92,33 @@ const getAllBooks = async (query: Record<string, string>) => {
   };
 };
 
+const getMyBooks = async (
+  query: Record<string, string>,
+  decodedToken: JwtPayload
+) => {
+  const queryModel = new QueryBuilder(
+    Book.find({ authorId: decodedToken.userId }),
+    query
+  );
+
+  const books = queryModel
+    .search(bookSearchableFields)
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
+
+  const [data, meta] = await Promise.all([
+    (await books).build(),
+    queryModel.getMeta(),
+  ]);
+
+  return {
+    data,
+    meta,
+  };
+};
+
 const getAllPendingBooks = async (query: Record<string, string>) => {
   const queryModel = new QueryBuilder(
     Book.find({ bookStatus: IBookStatusType.PENDING }),
@@ -216,6 +243,7 @@ export const bookServices = {
   createBook,
   addBook,
   getAllBooks,
+  getMyBooks,
   getAllPublishedBooks,
   getAllPendingBooks,
   getSingleBook,
