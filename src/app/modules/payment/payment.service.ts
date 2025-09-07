@@ -240,10 +240,21 @@ const getPDFDownloadLink = async (_id: string, userId: string) => {
   };
 };
 
+const myPayment = async (decodedToken: JwtPayload) => {
+  const payments = await Payment.find({ userId: decodedToken.userId }).sort(
+    "-createdAt"
+  );
+
+  return {
+    data: payments,
+  };
+};
+
 export const PaymentServices = {
   makePayment,
   successPayment,
   failedPayment,
   cancelPayment,
   getPDFDownloadLink,
+  myPayment,
 };

@@ -16,6 +16,11 @@ router.post(
 router.post("/success", PaymentControllers.successPayment);
 router.post("/fail", PaymentControllers.failedPayment);
 router.post("/cancel", PaymentControllers.cancelPayment);
+router.post(
+  "/my-payments",
+  checkAuth(...Object.values(Role)),
+  PaymentControllers.myPayment
+);
 router.post("/validate-payment", PaymentControllers.validatePayment);
 router.post(
   "/invoice/:id",

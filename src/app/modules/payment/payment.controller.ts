@@ -83,6 +83,21 @@ const getPDFDownloadLink = catchAsync(
   }
 );
 
+const myPayment = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload;
+
+    const result = await PaymentServices.myPayment(decodedToken);
+
+    SendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "PDF Link retrive.",
+      data: result.data,
+    });
+  }
+);
+
 const validatePayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     await SSLServices.SSLValidation(req.body);
@@ -102,5 +117,6 @@ export const PaymentControllers = {
   failedPayment,
   cancelPayment,
   getPDFDownloadLink,
+  myPayment,
   validatePayment,
 };
