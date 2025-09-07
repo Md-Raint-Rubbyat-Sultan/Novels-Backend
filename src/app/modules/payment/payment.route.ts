@@ -16,7 +16,7 @@ router.post(
 router.post("/success", PaymentControllers.successPayment);
 router.post("/fail", PaymentControllers.failedPayment);
 router.post("/cancel", PaymentControllers.cancelPayment);
-router.post(
+router.get(
   "/my-payments",
   checkAuth(...Object.values(Role)),
   PaymentControllers.myPayment

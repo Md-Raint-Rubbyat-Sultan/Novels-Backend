@@ -14,7 +14,7 @@ import { multerUpload } from "../../config/multer.config";
 const router = Router();
 
 router.post(
-  "/register",
+  "/create",
   multerUpload.single("file"),
   validateRequest(createUserZodSchema),
   UserControllers.createUser

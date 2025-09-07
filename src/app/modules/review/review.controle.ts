@@ -47,6 +47,7 @@ const getMyReviews = catchAsync(
       success: true,
       message: "All reviews retrive successfully",
       data: result.data,
+      meta: result.meta,
     });
   }
 );

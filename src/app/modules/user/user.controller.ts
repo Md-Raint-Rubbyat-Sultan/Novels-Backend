@@ -10,7 +10,7 @@ const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userInfo = {
       ...req.body,
-      picture: (req.file as Express.Multer.File) || "",
+      picture: req.file?.path || "",
     };
 
     const result = await UserServices.createUser(userInfo);
@@ -29,7 +29,7 @@ const updateUser = catchAsync(
     const userId = req.params.id;
     const payload = {
       ...req.body,
-      picture: req.file as Express.Multer.File,
+      picture: req.file?.path,
     };
     const verifiedToken = req.user;
 

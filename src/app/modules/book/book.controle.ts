@@ -50,6 +50,7 @@ const getAllPublishedBooks = catchAsync(
       success: true,
       message: "All Books retrives",
       data: result.data,
+      meta: result.meta,
     });
   }
 );
@@ -66,6 +67,7 @@ const getMyBooks = catchAsync(
       success: true,
       message: "All Books retrives",
       data: result.data,
+      meta: result.meta,
     });
   }
 );
@@ -81,6 +83,7 @@ const getAllBook = catchAsync(
       success: true,
       message: "All Books retrives",
       data: result.data,
+      meta: result.meta,
     });
   }
 );
@@ -96,6 +99,7 @@ const getAllPendingBooks = catchAsync(
       success: true,
       message: "All Pending Books retrives",
       data: result.data,
+      meta: result.meta,
     });
   }
 );
