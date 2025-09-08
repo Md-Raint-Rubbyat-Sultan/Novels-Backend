@@ -57,8 +57,9 @@ export class QueryBuilder<T> {
     return this;
   }
 
-  async getMeta() {
-    const totalDocument = await this.modelQuery.model.countDocuments();
+  async getMeta(metaQuery?: Record<string, string>) {
+    const newQuery = metaQuery ? metaQuery : {};
+    const totalDocument = await this.modelQuery.model.countDocuments(newQuery);
     const page = Number(this.query?.page) || 1;
     const limit = Number(this.query?.limit) || totalDocument;
     const totalPage = Math.ceil(totalDocument / limit);

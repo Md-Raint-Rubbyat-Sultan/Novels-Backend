@@ -62,7 +62,7 @@ const getAllPublishedBooks = async (query: Record<string, string>) => {
       .populate("authorId", "_id name picture")
       .populate("ratings")
       .select("-bookStatus -content"),
-    queryModel.getMeta(),
+    queryModel.getMeta({ bookStatus: IBookStatusType.ACCEPTED }),
   ]);
 
   return {
@@ -97,7 +97,10 @@ const getMyBooks = async (
   decodedToken: JwtPayload
 ) => {
   const queryModel = new QueryBuilder(
-    Book.find({ authorId: decodedToken.userId }),
+    Book.find({
+      authorId: decodedToken.userId,
+      bookStatus: IBookStatusType.ACCEPTED,
+    }),
     query
   );
 
@@ -110,7 +113,7 @@ const getMyBooks = async (
 
   const [data, meta] = await Promise.all([
     (await books).build(),
-    queryModel.getMeta(),
+    queryModel.getMeta({ authorId: decodedToken.userId }),
   ]);
 
   return {
@@ -134,7 +137,7 @@ const getAllPendingBooks = async (query: Record<string, string>) => {
 
   const [data, meta] = await Promise.all([
     (await books).build(),
-    queryModel.getMeta(),
+    queryModel.getMeta({ bookStatus: IBookStatusType.PENDING }),
   ]);
 
   return {
